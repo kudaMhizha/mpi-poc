@@ -1,9 +1,30 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
+import * as vpc from './stack/vpc';
+import * as auth from './stack/auth'
+import * as fileRepository from './stack/bucket'
+import * as database from './stack/rds'
 
-// Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket("my-bucket");
+const vpcDetails = vpc.createVpc()
 
-// Export the name of the bucket
-export const bucketName = bucket.id;
+const stackOutputs = vpcDetails.vpcId.apply(value => {
+  const name = 'uploads-' + value
+  const bucket = fileRepository.createBucket(name);
+
+  const userPoolDetails = bucket.arn.apply(value => {
+    console.info('buckerARN:', value)
+    return auth.createUserPool(value)
+  })
+
+  const databaseArn = database.createDBInstance()
+
+  return {
+    bucketName: bucket.id,
+    userPoolId: userPoolDetails.userPoolId,
+    databaseArn: databaseArn.arn
+  }
+})
+
+// Exports
+export const bucketName = stackOutputs.bucketName;
+export const userPool = stackOutputs.userPoolId;
+export const databaseArn = stackOutputs.databaseArn
