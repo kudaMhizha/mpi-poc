@@ -28,12 +28,12 @@ export function createDockerImage() {
     protocol: 'HTTP',
   });
 
-  const repo = new awsx.ecr.Repository('repo', {
+  const repo = new awsx.ecr.Repository(`${STACK_NAME}-repo`, {
     forceDelete: true,
   });
 
   // Build and publish a Docker image to a private ECR registry.
-  const img = new awsx.ecr.Image('app-img', {
+  const img = new awsx.ecr.Image(`${STACK_NAME}-ecr-image`, {
     repositoryUrl: repo.url,
     context: '../',
     platform: 'linux/amd64',
@@ -61,6 +61,7 @@ export function createDockerImage() {
             'awslogs-stream-prefix': 'nestjs',
           },
         },
+        // TODO: add environment { name, value }
       },
     },
     desiredCount: 1,

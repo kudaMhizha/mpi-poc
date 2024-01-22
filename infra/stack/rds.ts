@@ -2,11 +2,12 @@ import * as aws from '@pulumi/aws';
 import { Cluster } from '@pulumi/awsx/classic/ecs';
 import { STACK_NAME } from './utils';
 
-export function createDBInstance(cluster: Cluster) {
-  // Create a new RDS instance within the VPC of the ECS cluster
-  const dbSubnetGroup = new aws.rds.SubnetGroup(`${STACK_NAME}-dbSubnetGroup`, {
-    subnetIds: cluster.vpc.privateSubnetIds,
-  });
+
+export function createDBInstance(_cluster: Cluster) {
+  // TODO: Create a new RDS instance within the VPC of the ECS cluster
+  // const dbSubnetGroup = new aws.rds.SubnetGroup(`${STACK_NAME}-dbsubnetgroup`, {
+  //   subnetIds: cluster.vpc.getSubnetsIds('public'), // move to private sub
+  // });
 
   // Create a new KMS key for encrypting the RDS instance master user password
   const kms = new aws.kms.Key(`${STACK_NAME}-kms`, {
@@ -22,11 +23,11 @@ export function createDBInstance(cluster: Cluster) {
     manageMasterUserPassword: true,
     masterUserSecretKmsKeyId: kms.keyId,
     username: `${STACK_NAME}`,
-    dbSubnetGroupName: dbSubnetGroup.id,
-    vpcSecurityGroupIds: [cluster.securityGroups[0].id],
+    // dbSubnetGroupName: dbSubnetGroup.id,
+    // vpcSecurityGroupIds: [cluster.securityGroups[0].id],
     parameterGroupName: 'default.postgres15',
-    multiAz: false, //TODO: disable for now.
-    skipFinalSnapshot: true,
+    skipFinalSnapshot: true, // TODO: update to false 
+    finalSnapshotIdentifier: `${STACK_NAME}-finalSnapshotIdentifier`
   });
 
   return { postgresEndpoint: postgresInstance.endpoint };
