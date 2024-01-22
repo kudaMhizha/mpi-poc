@@ -33,9 +33,13 @@ tmp
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
+yarnrc
 testem.log
 /typings
 
 # System Files
 .DS_Store
 Thumbs.db
+.env
+
+/prisma/db/**
