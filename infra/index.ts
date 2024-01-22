@@ -1,30 +1,19 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as vpc from './stack/vpc';
-import * as auth from './stack/auth'
-import * as fileRepository from './stack/bucket'
-import * as database from './stack/rds'
+import * as auth from './stack/auth';
+import * as fileRepository from './stack/bucket';
+import * as database from './stack/rds';
+import * as container from './container';
 
-const vpcDetails = vpc.createVpc()
+const bucket = fileRepository.createBucket();
 
-const stackOutputs = vpcDetails.vpcId.apply(value => {
-  const name = 'uploads-' + value
-  const bucket = fileRepository.createBucket(name);
+const userPoolDetails = auth.createUserPool();
 
-  const userPoolDetails = bucket.arn.apply(value => {
-    console.info('buckerARN:', value)
-    return auth.createUserPool(value)
-  })
+const ecs = container.createDockerImage();
 
-  const databaseArn = database.createDBInstance()
-
-  return {
-    bucketName: bucket.id,
-    userPoolId: userPoolDetails.userPoolId,
-    databaseArn: databaseArn.arn
-  }
-})
+const rds = database.createDBInstance(ecs.cluster);
 
 // Exports
-export const bucketName = stackOutputs.bucketName;
-export const userPool = stackOutputs.userPoolId;
-export const databaseArn = stackOutputs.databaseArn
+export const bucketName = bucket.id;
+export const userPool = userPoolDetails.userPoolId;
+export const databaseEndpoint = rds.postgresEndpoint;
+export const serviceEndpoint = ecs.serviceUrl;
+export const ecsClusterId = ecs.cluster.id;
