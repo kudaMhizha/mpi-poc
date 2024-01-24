@@ -47,6 +47,7 @@ jobs:
       with:
         command: up
         stack-name: Kpmhizha/backend/test
+        work-dir: apps/struct
       env:
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
