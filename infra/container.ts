@@ -1,8 +1,12 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as awsx from '@pulumi/awsx';
 import * as aws from '@pulumi/aws';
-import { STACK_NAME } from './stack/utils';
+import { STACK_NAME } from './utils';
 
-export function createDockerImage() {
+const config = new pulumi.Config();
+const skipResource = config.getBoolean("skipResource");
+
+export function createContainer() {
   /*
  * Here we are using AWSx Crosswalk libraries that capture higher-level AWS best practices rather 
    than mapping raw infrastructure constructs.
@@ -30,7 +34,7 @@ export function createDockerImage() {
 
   const repo = new awsx.ecr.Repository(`${STACK_NAME}-repo`, {
     forceDelete: true,
-  });
+  }); // TODO: figure out why repo is being replaced on each deploy. 
 
   // Build and publish a Docker image to a private ECR registry.
   const img = new awsx.ecr.Image(`${STACK_NAME}-ecr-image`, {

@@ -1,5 +1,5 @@
 import * as aws from '@pulumi/aws';
-import { STACK_NAME } from './utils';
+import { STACK_NAME } from '../utils';
 
 export function createUserPool() {
   const userPool = new aws.cognito.UserPool('userPool', {

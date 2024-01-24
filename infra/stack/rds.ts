@@ -1,6 +1,6 @@
 import * as aws from '@pulumi/aws';
 import { Cluster } from '@pulumi/awsx/classic/ecs';
-import { STACK_NAME } from './utils';
+import { STACK_NAME } from '../utils';
 
 
 export function createDBInstance(cluster: Cluster) {
