@@ -1,62 +1,27 @@
-name: CI/CD Pipelines - MPI_POC
-
+name: Pulumi
 on:
   push:
     branches:
-      - develop
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
-
 jobs:
-  deploy-pr-dev-or-staging:
+  update:
+    name: Update
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-
-    - name: Install Dependencies
-      run: yarn
-
-    # - name: Build App
-    #   run: |
-    #     VITE_APP_ENV=${{ secrets.VITE_APP_ENV }} \
-    #     VITE_API_URL=${{ secrets.VITE_API_URL }} \
-    #     VITE_APP_NAME=${{ secrets.VITE_APP_NAME }} \
-    #     VITE_HOST_URL=${{ secrets.VITE_HOST_URL }} \
-    #     yarn build web --skip-nx-cache
-    
-    
-    - name: Configure AWS Dev Credentials
-      if: startsWith(github.ref, 'refs/heads/develop')
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-        aws-region: eu-west-1
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
-
-    - name: Pulumi deploy dev
-      if: startsWith(github.ref, 'refs/heads/develop')
-      uses: pulumi/actions@v3
-      with:
-        command: up
-        stack-name: Kpmhizha/backend/test
-        work-dir: apps/struct
-      env:
-        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-    - name: Pulumi preview pr
-      if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/develop'
-      uses: pulumi/actions@v3
-      with:
-        command: preview
-        stack-name: Kpmhizha/backend/test
-        work-dir: apps/struct
-      env:
-        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3.5.0
+        with:
+          node-version-file: package.json
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
+      - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: backend/test
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
