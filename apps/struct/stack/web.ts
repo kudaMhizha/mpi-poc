@@ -39,7 +39,7 @@ export function deplyWeb() {
     {
       bucket: bucket.id,
       blockPublicAcls: false,
-      ignorePublicAcls: true,
+      ignorePublicAcls: false,
       blockPublicPolicy: true,
       restrictPublicBuckets: true,
     }
