@@ -3,9 +3,7 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import { deplyWeb } from "./stack/web";
 
-deplyWeb()
-// Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket("my-bucket");
+const web = deplyWeb()
 
-// Export the name of the bucket
-export const bucketName = bucket.id;
+export const bucketName = web.bucketId;
+export const cdnURL = web.cdnURL;
