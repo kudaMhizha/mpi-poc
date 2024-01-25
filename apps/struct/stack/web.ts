@@ -12,11 +12,14 @@ export function deplyWeb() {
     '../../../dist/apps/web'
   );
 
-  console.info('pathToWebsiteContents...', pathToWebsiteContents);
+  console.info('pathToWebsiteContents...', removeDuplicateDirectory(pathToWebsiteContents));
 
   const bucket = new aws.s3.Bucket('dev-site-bucket', {
     website: {
       indexDocument: 'index.html',
+    },
+    versioning: {
+      enabled: true,
     },
   });
 
@@ -39,9 +42,9 @@ export function deplyWeb() {
     {
       bucket: bucket.id,
       blockPublicAcls: false,
-      ignorePublicAcls: false,
-      blockPublicPolicy: true,
-      restrictPublicBuckets: true,
+      // ignorePublicAcls: false,
+      // blockPublicPolicy: false,
+      // restrictPublicBuckets: true,
     }
   );
 
@@ -67,11 +70,11 @@ export function deplyWeb() {
   const syncedFolder = new synced.S3BucketFolder(
     'dev-site-synced-folder',
     {
-      path: pathToWebsiteContents,
+      path: removeDuplicateDirectory(pathToWebsiteContents),
       bucketName: bucket.bucket,
       acl: aws.s3.PublicReadAcl,
     },
-    { dependsOn: bucketPolicy }
+    { ignoreChanges: [] } // Ensure always updated
   );
 
   // Create an Origin Access Control for CloudFront
@@ -210,4 +213,15 @@ function createLogBucket(): aws.s3.Bucket {
   });
 
   return logBucket;
+}
+
+/**
+ * For Github Actions directory
+ * @param inputString 
+ * @returns 
+ */
+function removeDuplicateDirectory(path) {
+  const parts = path.split('/');
+  const uniqueParts = [...new Set(parts)];
+  return uniqueParts.join('/');
 }

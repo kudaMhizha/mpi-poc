@@ -19,6 +19,8 @@ jobs:
           aws-region: eu-west-1
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
       - run: yarn
+      - name: Build Web App
+        run: yarn build web --skip-nx-cache
       - uses: pulumi/actions@v3
         with:
           command: up
