@@ -4,30 +4,28 @@ on:
     branches:
       - develop
 jobs:
-  update:
-    name: Update
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3.5.0
+      - uses: actions/checkout@v3
         with:
-            node-version: 18
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-region: eu-west-1
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
-      - run: yarn
-      - name: Print working directory
+          node-version: '16'
+      - name: Setup Git
         run: |
-            echo "Current working directory: $(pwd)"
-      - name: Build Web App
-        run: yarn build web --skip-nx-cache
-      - uses: pulumi/actions@v3
-        with:
-          command: up
-          stack-name: Kpmhizha/backend/test
-          work-dir: apps/struct
+          git config user.name "GitHub Bot"
+          git config user.email "gituser@example.com"
+      - run: yarn install --frozen-lockfile
+      - name: Version
+        shell: bash
+        run: yarn nx affected --base=last-release --target=version
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag last-release
+        shell: bash
+        run: |
+          git tag -f last-release
+          git push origin last-release --force
