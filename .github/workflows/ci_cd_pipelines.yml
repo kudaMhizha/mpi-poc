@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
+      - name: Install Dependencies
+        run: yarn
     
       - name: Check AWS CLI version
         run: aws --version
@@ -26,7 +29,7 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
             aws-region: eu-west-1
-            
+
       - name: Pulumi deploy dev
         if: startsWith(github.ref, 'refs/heads/develop')
         uses: pulumi/actions@v3
