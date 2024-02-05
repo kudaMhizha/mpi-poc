@@ -1,4 +1,6 @@
 FROM node:lts-alpine as builder
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 WORKDIR /app
 RUN echo "DATABASE_URL=${DATABASE_URL}"
 RUN yarn global add nx
