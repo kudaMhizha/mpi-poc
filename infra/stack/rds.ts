@@ -1,25 +1,34 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
+import * as aws from '@pulumi/aws';
+import { Cluster } from '@pulumi/awsx/classic/ecs';
+import { STACK_NAME } from '../utils';
 
-export function createDBInstance() {
-  const dbSecret = new aws.kms.Key("example", { description: "Example KMS Key" });
 
-  const db = new aws.rds.Cluster("postgresql", {
-    availabilityZones: [
-      "eu-west-1a",
-      "eu-west-1b",
-      "eu-west-1c",
-    ],
-    backupRetentionPeriod: 5,
-    clusterIdentifier: "aurora-cluster-demo",
-    databaseName: "testDB",
-    engine: "aurora-postgresql",
-    manageMasterUserPassword: true,
-    masterUsername: "test",
-    masterUserSecretKmsKeyId: dbSecret.keyId,
-    preferredBackupWindow: "06:00-00:00",
+export function createDBInstance(cluster: Cluster) {
+  // TODO: Create a new RDS instance within the VPC of the ECS cluster
+  const dbSubnetGroup = new aws.rds.SubnetGroup(`${STACK_NAME}-dbsubnetgroup`, {
+    subnetIds: cluster.vpc.getSubnetsIds('public'), // move to private sub
   });
 
-  return { arn: db.arn };
-}
+  // Create a new KMS key for encrypting the RDS instance master user password
+  const kms = new aws.kms.Key(`${STACK_NAME}-kms`, {
+    description: 'KMS Key for RDS PostgreSQL instance',
+  });
 
+  const postgresInstance = new aws.rds.Instance(`${STACK_NAME}-db`, {
+    allocatedStorage: 10,
+    dbName: 'mpiDB',
+    engine: 'postgres',
+    engineVersion: '15.5',
+    instanceClass: aws.rds.InstanceTypes.T3_Micro,
+    manageMasterUserPassword: true,
+    masterUserSecretKmsKeyId: kms.keyId,
+    username: `${STACK_NAME}`,
+    dbSubnetGroupName: dbSubnetGroup.id,
+    vpcSecurityGroupIds: [cluster.securityGroups[0].id],
+    parameterGroupName: 'default.postgres15',
+    skipFinalSnapshot: true, // TODO: update to false 
+    finalSnapshotIdentifier: `${STACK_NAME}-finalSnapshotIdentifier`
+  });
+
+  return { postgresEndpoint: postgresInstance.endpoint };
+}
