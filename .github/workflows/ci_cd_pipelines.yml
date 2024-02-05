@@ -1,31 +1,34 @@
-name: Pulumi
+name: Docker Build and Push
+
 on:
   push:
     branches:
       - develop
+
 jobs:
-  release:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3.5.0
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Setup Git
+
+      - name: Authenticate with AWS ECR
         run: |
-          git config user.name "GitHub Bot"
-          git config user.email "gituser@example.com"
-      - run: yarn install --frozen-lockfile
-      - name: Version
-        shell: bash
-        run: yarn nx affected --base=develop --target=version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tag last-release
-        shell: bash
-        run: |
-          git tag -f last-release
-          git push origin last-release --force
+          echo "${{ secrets.AWS_ACCESS_KEY }}" | aws configure set aws_access_key_id --profile ecr-user
+          echo "${{ secrets.AWS_SECRET_ACCESS }}" | aws configure set aws_secret_access_key --profile ecr-user
+          aws ecr get-login-password --region eu-west-1 --profile ecr-user | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
+
+      - name: Build Docker image
+        run: docker build -t poc .
+
+      - name: Tag Docker image
+        run: docker tag poc:latest 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
+
+      - name: Push Docker image to AWS ECR
+        run: docker push 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
