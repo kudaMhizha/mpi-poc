@@ -1,16 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" translate="no">
   <head>
-    <meta charset="utf-8" />
-    <title>Web</title>
     <base href="/" />
 
+    <!-- SEO -->
+    <title>MPI APP</title>
+    <meta name="description" content="app" />
+
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta name="googlebot" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- White Flash Prevention Script -->
+    <script type="text/javascript" src="/scripts/init-theme.js"></script>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/icon/dark.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/icon/light.svg"
+      media="(prefers-color-scheme: dark)"
+    />
   </head>
-  <body>
+  <body
+    class="bg-background text-foreground text-sm antialiased print:bg-white print:m-0"
+  >
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/app/main.tsx"></script>
   </body>
 </html>

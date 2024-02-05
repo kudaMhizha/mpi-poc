@@ -1,0 +1,39 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type InvitedUser {
+  """Flag to determine if invite was successful or not"""
+  successFullInvite: Boolean!
+}
+
+type Query {
+  sayHello: String!
+}
+
+type Mutation {
+  inviteUser(inviteUser: IniviteUserinput!): InvitedUser!
+}
+
+input IniviteUserinput {
+  """User email address"""
+  email: String!
+
+  """User first name"""
+  name: String!
+
+  """User surname"""
+  surname: String!
+
+  """User company ID"""
+  companyId: String!
+
+  """User phone number"""
+  phoneNumber: String!
+
+  """User access level"""
+  accessLevel: String!
+
+  """User job description"""
+  jobDescription: String!
+}

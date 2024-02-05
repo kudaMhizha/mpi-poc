@@ -1,0 +1,11 @@
+overwrite: true
+schema: 'apps/backend/src/schema.gql'
+documents: 'libs/generated-graphql/src/graphql/**/*.gql'
+generates:
+  libs/generated-graphql/src/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true

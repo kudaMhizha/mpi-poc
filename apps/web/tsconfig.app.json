@@ -6,7 +6,8 @@
       "node",
       "@nx/react/typings/cssmodule.d.ts",
       "@nx/react/typings/image.d.ts",
-      "vite/client"
+      "vite/client",
+      "jest"
     ]
   },
   "exclude": [
@@ -19,5 +20,8 @@
     "src/**/*.spec.jsx",
     "src/**/*.test.jsx"
   ],
+  "paths": {
+    "@/*": ["./src/*"]
+  },
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
 }

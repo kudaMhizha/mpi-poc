@@ -1,0 +1,21 @@
+{
+  "name": "casl",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/casl/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "{workspaceRoot}/coverage/{projectRoot}",
+        "passWithNoTests": true,
+        "coverage": true,
+        "jestConfig": "libs/casl/jest.config.ts"
+      }
+    }
+  }
+}

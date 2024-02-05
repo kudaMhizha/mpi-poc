@@ -1,0 +1,24 @@
+{
+  "name": "email-templates",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/email-templates",
+  "projectType": "library",
+  "targets": {
+    "export": {
+      "command": "yarn email export --dir libs/email-templates/emails"
+    },
+    "dev": {
+      "command": "yarn email dev --dir libs/email-templates/emails"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "{workspaceRoot}/coverage/{projectRoot}",
+        "jestConfig": "libs/email-templates/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

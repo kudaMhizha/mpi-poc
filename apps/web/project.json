@@ -4,6 +4,13 @@
   "sourceRoot": "apps/web/src",
   "projectType": "application",
   "targets": {
+    "scan": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sonar-scanner",
+        "cwd": "apps/web"
+      }
+    },
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
@@ -53,20 +60,23 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/jest:jest",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/apps/web"
+        "reportsDirectory": "{workspaceRoot}/coverage/web",
+        "passWithNoTests": true,
+        "coverage": true,
+        "jestConfig": "apps/web/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
+    "serve-static": {
+      "executor": "@nx/web:file-server",
       "options": {
-        "preset": "conventionalcommits"
+        "buildTarget": "web:build"
       }
     }
   },
