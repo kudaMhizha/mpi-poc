@@ -1,5 +1,6 @@
 FROM node:lts-alpine as builder
 WORKDIR /app
+RUN echo "DATABASE_URL=${DATABASE_URL}"
 RUN yarn global add nx
 COPY package.json .
 COPY yarn.lock .
