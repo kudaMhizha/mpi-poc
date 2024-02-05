@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+    
+      - name: Check AWS CLI version
+        run: aws --version
 
       - name: Authenticate with AWS ECR
         run: |
