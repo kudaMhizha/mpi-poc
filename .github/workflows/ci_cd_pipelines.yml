@@ -26,6 +26,16 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
             aws-region: eu-west-1
+            
+      - name: Pulumi deploy dev
+        if: startsWith(github.ref, 'refs/heads/develop')
+        uses: pulumi/actions@v3
+        with:
+          command: preview
+          stack-name: mpi/test
+          work-dir: apps/infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Authenticate with AWS ECR
         run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
