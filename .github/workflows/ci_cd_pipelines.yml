@@ -20,12 +20,15 @@ jobs:
     
       - name: Check AWS CLI version
         run: aws --version
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
+            aws-region: eu-west-1
 
       - name: Authenticate with AWS ECR
-        run: |
-          echo "${{ secrets.AWS_ACCESS_KEY }}" | aws configure set aws_access_key_id --profile ecr-user
-          echo "${{ secrets.AWS_SECRET_ACCESS }}" | aws configure set aws_secret_access_key --profile ecr-user
-          aws ecr get-login-password --region eu-west-1 --profile ecr-user | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
+        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
 
       - name: Build Docker image
         run: docker build -t poc . --build-arg DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:PORT/DATABASE
