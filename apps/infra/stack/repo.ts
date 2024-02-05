@@ -18,7 +18,7 @@ export function createRepo() {
     platform: 'linux/amd64',
     args: {
       'DATABASE_URL': 'postgresql://ecs:password@ecs-dev-db17b7a04.c5s0ukaqqu5c.eu-west-1.rds.amazonaws.com:5432/mpidb'
-    }
+    },
   });
   
   return { repoUrl: repo.url, imageUri: img.imageUri }

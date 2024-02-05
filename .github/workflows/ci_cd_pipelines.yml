@@ -34,7 +34,7 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/develop')
         uses: pulumi/actions@v3
         with:
-          command: preview
+          command: up
           stack-name: mpi/test
           work-dir: apps/infra
         env:
@@ -48,6 +48,12 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t poc . --build-arg DATABASE_URL=${{ env.DATABASE_URL }}
+
+      - name: Pull existing Docker image
+        run: docker pull 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
+
+      - name: Delete existing Docker image
+        run: docker rmi 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
 
       - name: Tag Docker image
         run: docker tag poc:latest 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
