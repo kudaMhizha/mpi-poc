@@ -10,8 +10,6 @@ RUN yarn install --frozen-lockfile
 # Copy the rest of the application
 COPY . .
 
-ARG DATABASE_URL
-
 # Generate Prisma client and build the application
 RUN npx prisma generate --schema=./libs/prisma/prisma/schema.prisma && yarn build backend --skip-nx-cache
 
@@ -30,6 +28,8 @@ COPY --from=builder /app/dist/apps/backend .
 COPY --from=builder /app/package.json .
 COPY --from=builder /app/yarn.lock .
 COPY --from=builder /app/libs/prisma/prisma ./prisma
+
+ARG DATABASE_URL
 
 ENV PORT=4000
 ENV DATABASE_URL=$DATABASE_URL
