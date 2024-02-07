@@ -23,15 +23,6 @@ jobs:
       
       - name: '🔗 Generate GraphQL'
         run: yarn gql:codegen
-    
-      - name: Check AWS CLI version
-        run: aws --version
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
-            aws-region: eu-west-1
 
       - name: 'Build App'
         run: |
@@ -41,6 +32,15 @@ jobs:
           VITE_HOST_URL=${{ secrets.VITE_HOST_URL }} \
           yarn build web --skip-nx-cache
           yarn infra:build
+
+      - name: Check AWS CLI version
+        run: aws --version
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
+            aws-region: eu-west-1
 
       - name: Pulumi deploy dev
         if: startsWith(github.ref, 'refs/heads/develop')
