@@ -46,6 +46,15 @@ export function createDBInstance(cluster: Cluster) {
     tags: `${STACK_NAME}-db`
     */
   });
+  console.log('DB', pulumi.interpolate`postgresql://${rds.username}:${rds.password}@${rds.endpoint}/${rds.dbName}`)
+
+  const dbCredentials = pulumi.all(
+    [rds.username, rds.password, rds.endpoint, rds.dbName])
+    .apply(([username, password, endpoint, dbName]) => {
+      return {
+          url: `postgresql://${username}:${password}@${endpoint}/${dbName}`,
+       };
+  })
 
   return {
     postgresEndpoint: rds.endpoint,
@@ -54,6 +63,7 @@ export function createDBInstance(cluster: Cluster) {
     dbPassword: rds.password,
     dbUser: rds.username,
     dbSubnetGroupName: dbSubnetGroup.id,
-    dbConnectionString: pulumi.interpolate`postgresql://${rds.username}:${rds.password}@${rds.endpoint}/${rds.dbName}`,
+    dbConnectionString: dbCredentials.url,
   };
 }
+//postgresql://ecs:password@ecs-dev-db17b7a04.c5s0ukaqqu5c.eu-west-1.rds.amazonaws.com:5432/mpidb

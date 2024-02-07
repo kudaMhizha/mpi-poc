@@ -12,6 +12,16 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        
+      - name: Check Disk Space
+        run: |
+          disk_space=$(df -h / | awk 'NR==2{print $5}')
+          if [[ ${disk_space%?} -gt 50 ]]; then
+            echo "Disk space is greater than 50%."
+          else
+            echo "Disk space is less than or equal to 50%."
+            exit 1
+          fi
 
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -19,7 +29,7 @@ jobs:
           # this might remove tools that are actually needed,
           # when set to "true" but frees about 6 GB
           tool-cache: true
-          
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:

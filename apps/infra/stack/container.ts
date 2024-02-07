@@ -111,5 +111,5 @@ export function createContainer(userPool: {
     }
   );
 
-  return {serviceUrl: 'alb.loadBalancer.dnsName', apiEndpoint: 'apiDomainName'};
+  return {serviceUrl: 'alb.loadBalancer.dnsName', apiEndpoint: rds.dbConnectionString};
 }

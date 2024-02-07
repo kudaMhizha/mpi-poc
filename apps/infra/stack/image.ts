@@ -6,12 +6,11 @@ const STACK_NAME = config.getConfig().stackName;
 
 export function createRepository(databaseUrl) {
   const PLATFORM = 'linux/amd64';
-  const DATABASE_URL = databaseUrl
 
   const pathToWebsiteContents = path.resolve(__dirname, '../../../');
 
   console.info('Uploading Repository from...', pathToWebsiteContents);
-  console.info('Using DATABASE_URL...', DATABASE_URL);
+  console.info('Using DATABASE_URL...', databaseUrl);
 
   const repo = new awsx.ecr.Repository(`${STACK_NAME}-repo`, {
     forceDelete: true,
@@ -24,7 +23,7 @@ export function createRepository(databaseUrl) {
     context: pathToWebsiteContents,
     platform: PLATFORM,
     args: {
-      DATABASE_URL: DATABASE_URL,
+      DATABASE_URL: databaseUrl,
     },
   });
 
