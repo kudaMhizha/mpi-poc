@@ -20,6 +20,9 @@ jobs:
 
       - name: Install Dependencies
         run: yarn
+      
+      - name: '🔗 Generate GraphQL'
+        run: yarn gql:codegen
     
       - name: Check AWS CLI version
         run: aws --version
