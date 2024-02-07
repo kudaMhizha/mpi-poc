@@ -52,7 +52,7 @@ export function createDBInstance(cluster: Cluster) {
     [rds.username, rds.password, rds.endpoint, rds.dbName])
     .apply(([username, password, endpoint, dbName]) => {
       return {
-          url: `postgresql://${username}:${password}@${endpoint}/${dbName}`,
+          url: pulumi.interpolate`postgresql://${username}:${password}@${endpoint}/${dbName}`,
        };
   })
 
