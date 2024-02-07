@@ -48,7 +48,7 @@ jobs:
         uses: pulumi/actions@v3
         with:
           command: up
-          stack-name: mpi/test
+          stack-name: mpi/ecs-dev
           work-dir: apps/infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
