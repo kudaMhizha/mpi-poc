@@ -36,6 +36,8 @@ export function createDBInstance(cluster: Cluster) {
     skipFinalSnapshot: true, // TODO: update to false
     finalSnapshotIdentifier: `${STACK_NAME}-finalSnapshotIdentifier`,
     allowMajorVersionUpgrade: true,
+    applyImmediately: true,
+    publiclyAccessible: true,
     /* 
     storageEncrypted: true,
     performanceInsightsEnabled: true, for PROD
