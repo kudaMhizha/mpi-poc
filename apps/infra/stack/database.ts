@@ -1,3 +1,4 @@
+import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import {Cluster} from '@pulumi/awsx/classic/ecs';
 import * as config from './config';
@@ -53,6 +54,6 @@ export function createDBInstance(cluster: Cluster) {
     dbPassword: rds.password,
     dbUser: rds.username,
     dbSubnetGroupName: dbSubnetGroup.id,
-    dbConnectionString: `postgresql://${rds.username}:${rds.password}@${rds.endpoint}/${rds.dbName}`,
+    dbConnectionString: pulumi.interpolate`postgresql://${rds.username}:${rds.password}@${rds.endpoint}/${rds.dbName}`,
   };
 }
