@@ -4,8 +4,8 @@ import * as config from './config';
 
 const STACK_NAME = config.getConfig().stackName;
 const DB_NAME = config.getConfig().dbName;
-const DB_USER_NAME = config.getConfig().dbName;
-const DB_PASSWORD = config.getConfig().dbName;
+const DB_USER_NAME = config.getConfig().dbUserName;
+const DB_PASSWORD = config.getConfig().dbPassword;
 
 export function createDBInstance(cluster: Cluster) {
   const ENGINE = 'postgres';
