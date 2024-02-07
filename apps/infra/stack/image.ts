@@ -23,7 +23,7 @@ export function createRepository(databaseUrl) {
     context: pathToWebsiteContents,
     platform: PLATFORM,
     args: {
-      DATABASE_URL: 'postgresql://ecs:#pass12345@ecs-dev-dbbbe904f.c5s0ukaqqu5c.eu-west-1.rds.amazonaws.com:5432/ecsdb',
+      DATABASE_URL: 'postgresql://ecs:%23pass12345@ecs-dev-dbbbe904f.c5s0ukaqqu5c.eu-west-1.rds.amazonaws.com:5432/ecsdb',
     },
   });
 
