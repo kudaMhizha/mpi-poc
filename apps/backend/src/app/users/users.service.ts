@@ -4,7 +4,7 @@ import {CognitoService} from '../cognito/cognito.service';
 import {GeneratePasswordService} from '../common/services/generate-password.service';
 
 import {CognitoGroups} from '../common/types/cognito-groups.enum';
-import {IniviteUserinput} from './dto/invite-user.input';
+import {InviteUserInput} from './dto/invite-user.input';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,7 @@ export class UsersService {
     private readonly generatePasswordService: GeneratePasswordService
   ) {}
 
-  async inviteUser({email, name, surname, ...rest}: IniviteUserinput) {
+  async inviteUser({email, name, surname, ...rest}: InviteUserInput) {
     const tempPassword = this.generatePasswordService.generateUserPassword();
     const userId = await this.cognitoService.createUser({
       email: email,
@@ -39,5 +39,13 @@ export class UsersService {
     return {
       successFullInvite: true,
     };
+  }
+
+  async getUser(userId: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
   }
 }

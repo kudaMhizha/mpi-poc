@@ -1,6 +1,6 @@
 import {Resolver, Mutation, Args, Query} from '@nestjs/graphql';
 import {UsersService} from './users.service';
-import {IniviteUserinput} from './dto/invite-user.input';
+import {InviteUserInput} from './dto/invite-user.input';
 import {invitedUser} from './models/invited-user.model';
 
 @Resolver(invitedUser)
@@ -13,7 +13,7 @@ export class UsersResolver {
   }
 
   @Mutation(invitedUser)
-  inviteUser(@Args('inviteUser') inviteUserInput: IniviteUserinput) {
+  inviteUser(@Args('inviteUser') inviteUserInput: InviteUserInput) {
     return this.usersService.inviteUser(inviteUserInput);
   }
 }

@@ -9,7 +9,7 @@ import {UtilityService} from './utility.service';
 
 @Module({
   imports: [ConfigModule],
-  providers: [UtilityService],
-  exports: [UtilityResolver],
+  providers: [UtilityResolver, UtilityService],
+  exports: [UtilityService],
 })
 export class UtilityModule {}

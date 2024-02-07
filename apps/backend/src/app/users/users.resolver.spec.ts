@@ -6,7 +6,7 @@ import {PrismaService} from '../prisma/prisma.service';
 import {AppConfigService} from '../config/config.service';
 import {GeneratePasswordService} from '../common/services/generate-password.service';
 import {ConfigService} from '@nestjs/config';
-import {IniviteUserinput} from './dto/invite-user.input';
+import {InviteUserInput} from './dto/invite-user.input';
 import {InvitedUser} from './models/invited-user.model';
 
 describe('UsersResolver', () => {
@@ -41,7 +41,7 @@ describe('UsersResolver', () => {
 
   describe('inviteUser', () => {
     it('should call usersService.inviteUser with correct argument', () => {
-      const input: IniviteUserinput = {
+      const input: InviteUserInput = {
         email: 'test@example.com',
         name: 'John',
         surname: 'Doe',

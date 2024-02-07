@@ -2,7 +2,7 @@ version: '3'
 
 services:
   database:
-    image: postgres:${POSTGRES_VERSION:-15.5}
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
     ports:
       - 5432:5423
     environment:
@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
       POSTGRES_USER: ${POSTGRES_USER:-dev}
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
+      - db-data:/var/lib/postgresql/data:rw:w
 
 volumes:
   db-data:

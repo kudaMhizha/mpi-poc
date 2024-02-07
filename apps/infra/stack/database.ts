@@ -1,49 +1,49 @@
-import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import {Cluster} from '@pulumi/awsx/classic/ecs';
+import * as config from './config';
 
-const STACK_NAME = pulumi.getStack();
-const DB_NAME = 'mpidb';
+const STACK_NAME = config.getConfig().stackName;
+const DB_NAME = config.getConfig().dbName;
+const DB_USER_NAME = config.getConfig().dbName;
+const DB_PASSWORD = config.getConfig().dbName;
 
 export function createDBInstance(cluster: Cluster) {
-  // TODO: Create a new RDS instance within the VPC of the ECS cluster
+  const ENGINE = 'postgres';
+  const ENGINE_VERSION = '15.5';
+  const PARAMETER_GROUP_NAME = 'default.postgres15';
+
   const dbSubnetGroup = new aws.rds.SubnetGroup(`${STACK_NAME}-dbsubnetgroup`, {
-    subnetIds: cluster.vpc.getSubnetsIds('public'), // move to private sub
+    subnetIds: cluster.vpc.getSubnetsIds('public'), // TODO: move to private sub x setup SSH tunnel.
   });
 
-  // Create a new KMS key for encrypting the RDS instance master user password
-  // const kms = new aws.kms.Key(`${STACK_NAME}-kms`, {
-  //   description: 'KMS Key for RDS PostgreSQL instance',
-  // });
-
   /* 
-  REF: https://www.pulumi.com/registry/packages/aws/api-docs/rds/instance/#allowmajorversionupgrade_nodejs 
+  @see: https://www.pulumi.com/registry/packages/aws/api-docs/rds/instance/#allowmajorversionupgrade_nodejs 
   */
   const rds = new aws.rds.Instance(`${STACK_NAME}-db`, {
     allocatedStorage: 10,
     dbName: DB_NAME,
-    engine: 'postgres',
-    engineVersion: '15.5',
+    engine: ENGINE,
+    engineVersion: ENGINE_VERSION,
     instanceClass: aws.rds.InstanceTypes.T3_Micro,
-    // manageMasterUserPassword: true,
-    // masterUserSecretKmsKeyId: kms.keyId,
-    username: `ecs`,
-    password: 'password',
+    username: DB_USER_NAME,
+    password: DB_PASSWORD,
     dbSubnetGroupName: dbSubnetGroup.id,
     vpcSecurityGroupIds: [cluster.securityGroups[0].id],
-    parameterGroupName: 'default.postgres15',
+    parameterGroupName: PARAMETER_GROUP_NAME,
 
     backupRetentionPeriod: 7,
     skipFinalSnapshot: true, // TODO: update to false
     finalSnapshotIdentifier: `${STACK_NAME}-finalSnapshotIdentifier`,
     allowMajorVersionUpgrade: true,
-    // storageEncrypted: true,
-    // performanceInsightsEnabled: true, for PROD
-    // enabledCloudwatchLogsExports: pulumi.interpolate('postgresql,upgrade'),
-    // multiAz: true,
+    /* 
+    storageEncrypted: true,
+    performanceInsightsEnabled: true, for PROD
+    enabledCloudwatchLogsExports: pulumi.interpolate('postgresql,upgrade'),
+    multiAz: true,
     applyImmediately: true,
     publiclyAccessible: true,
-    // tags: `${STACK_NAME}-db`
+    tags: `${STACK_NAME}-db`
+    */
   });
 
   return {
@@ -53,5 +53,6 @@ export function createDBInstance(cluster: Cluster) {
     dbPassword: rds.password,
     dbUser: rds.username,
     dbSubnetGroupName: dbSubnetGroup.id,
+    dbConnectionString: `postgresql://${rds.username}:${rds.password}@${rds.endpoint}/${rds.dbName}`,
   };
 }

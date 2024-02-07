@@ -9,15 +9,16 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: true
-  });
+  const app = await NestFactory.create(AppModule);
+
+  // Enable CORS
+  app.enableCors();
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 4000;
-  await app.listen(port, "0.0.0.0");
-  Logger.log(`Database URL: ${process.env.DATABASE_URL}`)
-  Logger.log(`🚀 Server ready at: ${await app.getUrl()}/graphql`);
+  await app.listen(port);
+  Logger.log(`🚀 Server ready at: http://localhost:4000/graphql`);
 }
 
 bootstrap();

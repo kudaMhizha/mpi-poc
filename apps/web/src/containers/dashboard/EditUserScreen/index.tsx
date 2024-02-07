@@ -1,4 +1,4 @@
-import {PageHeader, PermissionsBox} from '@/web/components';
+import {BlockUserDrawer, PageHeader, PermissionsBox} from '@/web/components';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
   Button,
@@ -66,7 +66,7 @@ const EditUserScreen = () => {
             }}
           />
         </div>
-        <Button>Block user</Button>
+        <BlockUserDrawer />
       </div>
       <div>
         <FormProvider {...methods}>

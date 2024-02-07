@@ -2,15 +2,19 @@ import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import * as synced from '@pulumi/synced-folder';
 import * as path from 'path';
+import * as config from './config';
 import {updateDefaultS3Config} from '../utils';
+import {createLogBucket} from './bucket';
 
 const STACK_NAME = pulumi.getStack();
 const callerIdentity = pulumi.output(aws.getCallerIdentity({}));
-const buildDirectory = '../../../dist/apps/web';
-const indexDocument = 'index.html';
+
 const CDN_TLT = 600;
+const {CACHED_METHODS, PRICED_CLASS} = config.getConstants().cloudfront;
 
 export function deployWeb() {
+  const buildDirectory = '../../../dist/apps/web';
+  const indexDocument = 'index.html';
   const pathToWebsiteContents = path.resolve(__dirname, buildDirectory);
 
   console.info('Uploading contents from...', pathToWebsiteContents);
@@ -48,7 +52,8 @@ export function deployWeb() {
     {dependsOn: syncedFolder}
   );
 
-  const logBucket = createLogBucket();
+  const logBucketName = 'web-logBucket';
+  const logBucket = createLogBucket(logBucketName);
 
   const cdn = new aws.cloudfront.Distribution(
     `${STACK_NAME}-site-cdn`,
@@ -71,8 +76,8 @@ export function deployWeb() {
       defaultCacheBehavior: {
         targetOriginId: bucket.arn,
         viewerProtocolPolicy: 'redirect-to-https',
-        allowedMethods: ['GET', 'HEAD', 'OPTIONS'],
-        cachedMethods: ['GET', 'HEAD', 'OPTIONS'],
+        allowedMethods: CACHED_METHODS,
+        cachedMethods: CACHED_METHODS,
         forwardedValues: {
           queryString: true,
           cookies: {forward: 'all'},
@@ -81,7 +86,7 @@ export function deployWeb() {
         defaultTtl: CDN_TLT,
         maxTtl: CDN_TLT,
       },
-      priceClass: 'PriceClass_100',
+      priceClass: PRICED_CLASS,
       customErrorResponses: [
         {
           errorCode: 404,
@@ -95,7 +100,7 @@ export function deployWeb() {
       loggingConfig: {
         bucket: logBucket.bucketRegionalDomainName,
         includeCookies: false,
-        prefix: `${STACK_NAME}-cdn-logs/`,
+        prefix: `${STACK_NAME}-web-logs/`,
       },
     },
     {dependsOn: syncedFolder}
@@ -104,7 +109,7 @@ export function deployWeb() {
   /* 
     WHY: A bit weird, but this seems to be the easiest way to get Output<T> => T. 
         - You can't run string operations on Output<String>.
-    REF: https://www.pulumi.com/docs/concepts/inputs-outputs
+    @see: https://www.pulumi.com/docs/concepts/inputs-outputs
   */
   const policyCondition = callerIdentity.accountId.apply(accountId => {
     return bucket.id.apply(bucketId => {
@@ -151,23 +156,4 @@ export function deployWeb() {
     cloudFrontDistributionId: cdn.id,
     bucketId: bucket.id,
   };
-}
-
-function createLogBucket(): aws.s3.Bucket {
-  const logBucket = new aws.s3.Bucket(`${STACK_NAME}-cdn-logBucket`, {
-    acl: 'private', // Private to ensure logs are not publicly accessible
-    forceDestroy: true,
-  });
-
-  new aws.s3.BucketOwnershipControls(
-    `${STACK_NAME}-cdn-logbucketOwnershipControls`,
-    {
-      bucket: logBucket.id,
-      rule: {
-        objectOwnership: 'BucketOwnerPreferred',
-      },
-    }
-  );
-
-  return logBucket;
 }

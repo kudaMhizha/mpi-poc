@@ -13,7 +13,7 @@ export function updateDefaultS3Config(
 } {
   /* 
   WHY: S3 made some security changes to bucket config, enable this to allow uploads.
-  REF: https://stackoverflow.com/questions/76330998/aws-s3-invalidbucketaclwithobjectownershipbucket-cannot-have-acls-set-with-obje/76335671#76335671
+  @see: https://stackoverflow.com/questions/76330998/aws-s3-invalidbucketaclwithobjectownershipbucket-cannot-have-acls-set-with-obje/76335671#76335671
   */
   const bucketOwnershipControl = new aws.s3.BucketOwnershipControls(
     `${STACK_NAME}-${prefix}-bucketOwnershipControls-ObjectWriter`,

@@ -1,0 +1,12 @@
+config:
+  mpi:AWS_ACCESS_KEY_ID:
+    secure: AAABAE+ZcuWU67Qlgm7Zc7hvc99dHs47Oxr4xXxoKxva5Sv0V/Az3hjuVtX1KtglI6NDhw==
+  mpi:AWS_SECRET_ACCESS_KEY:
+    secure: AAABADPXxLURKEeo5GQWjarrJWAdYzogv90KUShg9yeechqpelgkxslN8z1yvubVB4fJqoj/kZ/YvH92J+toIYAMPjzq0T7L
+  mpi:DB_NAME:
+    secure: AAABAIQN28jD9E1gWoGQHoz+UOSx4rBA0XK5bUkOOJlyPudjPg==
+  mpi:DB_PASSWORD:
+    secure: AAABABLpoBveuR/B3ucHb9c0e0uzZFCuGngz/b0lEDt9F0jgxwg7zTMI0t8=
+  mpi:DB_USER_NAME:
+    secure: AAABAMpu/zES12QzUPFaqVsSpOAetMBRygxOuiu4CHh3l4Y=
+  mpi:REGION: eu-west-1

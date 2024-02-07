@@ -1,6 +1,7 @@
 import type {Config} from 'jest';
 
 const config: Config = {
+  testEnvironment: 'jsdom',
   displayName: 'ui',
   preset: '../../jest.preset.js',
   transform: {

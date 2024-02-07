@@ -13,3 +13,4 @@ export {default as SettingsScreen} from './dashboard/SettingsScreen';
 export {default as UsersScreen} from './dashboard/UsersScreen';
 export {default as ViewCompanyScreen} from './dashboard/ViewCompanyScreen';
 export {default as DashboardLayout} from './dashboard/layout';
+export {default as SubmitSupportRequest} from './dashboard/SupportRequest/SubmitSupportRequest';

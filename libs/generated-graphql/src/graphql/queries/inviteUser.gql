@@ -1,0 +1,5 @@
+  mutation InviteUser ($inviteUser: InviteUserInput!) {
+    inviteUser(inviteUser: $inviteUser) {
+      successFullInvite
+    }
+  }

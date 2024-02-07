@@ -22,7 +22,8 @@ import {
 } from '@mpi-app/ui';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {useSayHelloQuery} from 'generated-graphql'
 
 function LoginScreen() {
   //State for dialog to be by opened and closed by DialogTrigger
@@ -39,6 +40,12 @@ function LoginScreen() {
   const onSubmit = async () => {
     navigate('/auth/dashboard');
   };
+  // TODO: remove this, just for testing purposes.
+  const { data, loading, error } = useSayHelloQuery({
+    variables: {
+    },
+  });
+  console.log('data', data, loading, error)
 
   return (
     <div>

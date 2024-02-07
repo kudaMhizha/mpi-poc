@@ -10,21 +10,49 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "types": ["vite/client", "node"],
+    "types": [
+      "vite/client",
+      "node"
+    ],
     "paths": {
-      "@/web/*": ["apps/web/src/*"],
-      "@mpi-app/casl": ["libs/casl/src/index.ts"],
-      "@mpi-app/ui": ["libs/ui/src/index.ts"],
-      "@mpi-app/ui/*": ["libs/ui/src/*"],
-      "@mpi-app/utils": ["libs/utils/src/index.ts"],
-      "@mpi-app/utils*": ["libs/utils/src*"],
-      "generated-graphql": ["libs/generated-graphql/src/index.ts"],
-      "prisma": ["libs/prisma/*"]
+      "@/web/*": [
+        "apps/web/src/*"
+      ],
+      "@mpi-app/casl": [
+        "libs/casl/src/index.ts"
+      ],
+      "@mpi-app/ui": [
+        "libs/ui/src/index.ts"
+      ],
+      "@mpi-app/ui/*": [
+        "libs/ui/src/*"
+      ],
+      "@mpi-app/utils": [
+        "libs/utils/src/index.ts"
+      ],
+      "@mpi-app/utils*": [
+        "libs/utils/src*"
+      ],
+      "@email-templates/*": [
+        "libs/email-templates/emails/*"
+      ],
+      "generated-graphql": [
+        "libs/generated-graphql/src/index.ts"
+      ],
+      "prisma": [
+        "libs/prisma/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

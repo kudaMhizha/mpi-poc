@@ -1,6 +1,6 @@
 import {Button, Separator} from '@mpi-app/ui';
 import {cn} from '@mpi-app/utils';
-import {File, SignOut, Upload} from '@phosphor-icons/react';
+import {File, Headset, SignOut, Upload} from '@phosphor-icons/react';
 import {Briefcase, Gear, User} from '@phosphor-icons/react/dist/ssr';
 import {motion} from 'framer-motion';
 import {Link, useLocation} from 'react-router-dom';
@@ -80,6 +80,11 @@ const sidebarItems: SidebarItem[] = [
 ];
 
 const sidebarFooterItems = [
+  {
+    path: '/auth/support',
+    name: 'Support Request',
+    icon: <Headset />,
+  },
   {
     path: '/auth/settings',
     name: 'Settings',

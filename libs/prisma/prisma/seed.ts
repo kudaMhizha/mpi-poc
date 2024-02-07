@@ -1,5 +1,5 @@
 /* Learn more about seeding here:
-  REF: https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
+  @see: https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
  */
 import {PrismaClient} from '@prisma/client';
 import {faker} from '@faker-js/faker';

@@ -3,7 +3,7 @@ import {AccessLevels} from '@prisma/client';
 import {IsEmail, Length, Matches} from 'class-validator';
 
 @InputType()
-export class IniviteUserinput {
+export class InviteUserInput {
   @Field(() => String, {description: 'User email address'})
   @IsEmail()
   email: string;

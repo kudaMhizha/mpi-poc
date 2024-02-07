@@ -1,15 +1,43 @@
-import {UploadedFile, UseInterceptors, Request} from '@nestjs/common';
-import {FileInterceptor} from '@nestjs/platform-express';
-import {Mutation, Resolver} from '@nestjs/graphql';
+import {
+  Args,
+  InputType,
+  Field,
+  Mutation,
+  ObjectType,
+  Resolver,
+} from '@nestjs/graphql';
 import {UtilityService} from './utility.service';
 
-@Resolver()
+@ObjectType()
+export class UploadFileResponse {
+  @Field(() => String)
+  url: string;
+
+  @Field(() => String)
+  key: string;
+}
+
+@InputType()
+class UserInput {
+  @Field(() => String)
+  fileName: string;
+
+  @Field(() => String)
+  fileType: string;
+
+  @Field(() => String)
+  buffer: string;
+}
+
+@Resolver(UploadFileResponse)
 export class UtilityResolver {
   constructor(private utilityService: UtilityService) {}
 
-  @Mutation(() => String)
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file, @Request() req) {
-    return await this.utilityService.uploadFile(file, req.body);
+  @Mutation(() => UploadFileResponse)
+  async uploadFile(
+    @Args('userInput') userInput: UserInput
+  ): Promise<UploadFileResponse> {
+    const tt = await this.utilityService.uploadFile(userInput);
+    return tt;
   }
 }

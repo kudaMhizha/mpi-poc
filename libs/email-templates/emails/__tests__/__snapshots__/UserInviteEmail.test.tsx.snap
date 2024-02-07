@@ -1,0 +1,225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<html
+  dir="ltr"
+  lang="en"
+>
+  <head>
+    <meta
+      content="text/html; charset=UTF-8"
+      httpEquiv="Content-Type"
+    />
+  </head>
+  <div
+    style={
+      Object {
+        "display": "none",
+        "lineHeight": "1px",
+        "maxHeight": 0,
+        "maxWidth": 0,
+        "opacity": 0,
+        "overflow": "hidden",
+      }
+    }
+  >
+    Confirm your email address
+    <div>
+       ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+    </div>
+  </div>
+  <body
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+        "margin": "0 auto",
+      }
+    }
+  >
+    <table
+      align="center"
+      border={0}
+      cellPadding="0"
+      cellSpacing="0"
+      role="presentation"
+      style={
+        Object {
+          "margin": "0 auto",
+          "maxWidth": "600px",
+        }
+      }
+      width="100%"
+    >
+      <tbody>
+        <tr
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+        >
+          <td>
+            <h1
+              style={
+                Object {
+                  "color": "#1d1c1d",
+                  "fontSize": "36px",
+                  "fontWeight": 700,
+                  "lineHeight": "42px",
+                  "margin": "30px 0",
+                  "padding": "0",
+                }
+              }
+            >
+              Join Company Name
+            </h1>
+            <p
+              style={
+                Object {
+                  "fontSize": "20px",
+                  "lineHeight": "28px",
+                  "margin": "16px 0",
+                  "marginBottom": "30px",
+                }
+              }
+            >
+              Your email address (email@email) and your temporary code is below - enter it and sign in.
+            </p>
+            <table
+              align="center"
+              border={0}
+              cellPadding="0"
+              cellSpacing="0"
+              role="presentation"
+              style={
+                Object {
+                  "background": "rgb(245, 244, 245)",
+                  "borderRadius": "4px",
+                  "marginBottom": "30px",
+                  "marginRight": "50px",
+                  "padding": "43px 23px",
+                }
+              }
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <p
+                      style={
+                        Object {
+                          "fontSize": "30px",
+                          "lineHeight": "24px",
+                          "margin": "16px 0",
+                          "textAlign": "center",
+                          "verticalAlign": "middle",
+                        }
+                      }
+                    >
+                      A77IiY1c!k!c
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": "14px",
+                  "lineHeight": "24px",
+                  "margin": "16px 0",
+                }
+              }
+            />
+            <table
+              align="center"
+              border={0}
+              cellPadding="0"
+              cellSpacing="0"
+              role="presentation"
+              style={
+                Object {
+                  "alignContent": "center",
+                  "display": "flex",
+                  "justifyContent": "center",
+                  "marginBottom": "65px",
+                  "marginTop": "20px",
+                }
+              }
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <table
+                      align="center"
+                      border={0}
+                      cellPadding="0"
+                      cellSpacing="0"
+                      role="presentation"
+                      width="100%"
+                    >
+                      <tbody
+                        style={
+                          Object {
+                            "width": "100%",
+                          }
+                        }
+                      >
+                        <tr
+                          style={
+                            Object {
+                              "width": "100%",
+                            }
+                          }
+                        >
+                          <td
+                            data-id="__react-email-column"
+                          >
+                            <a
+                              href="https://undefined"
+                              style={
+                                Object {
+                                  "backgroundColor": "#f3f3f5",
+                                  "borderRadius": "24px",
+                                  "color": "#2E4A49",
+                                  "fontSize": "17px",
+                                  "lineHeight": "17px",
+                                  "maxWidth": "120px",
+                                  "padding": "13px 17px",
+                                  "textDecoration": "none",
+                                }
+                              }
+                              target="_blank"
+                            >
+                              Sign Up
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p
+              style={
+                Object {
+                  "color": "#000",
+                  "fontSize": "14px",
+                  "lineHeight": "24px",
+                  "margin": "16px 0",
+                }
+              }
+            >
+              If you didn't request this email, there's nothing to worry about - you can safely ignore it.
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+`;

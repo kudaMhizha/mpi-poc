@@ -6,7 +6,7 @@ import {GeneratePasswordService} from '../common/services/generate-password.serv
 import {AppConfigService} from '../config/config.service';
 import {ConfigService} from '@nestjs/config';
 import {CognitoGroups} from '../common/types/cognito-groups.enum';
-import {IniviteUserinput} from './dto/invite-user.input';
+import {InviteUserInput} from './dto/invite-user.input';
 
 const user = {
   email: 'test@example.com',
@@ -57,7 +57,7 @@ describe('UsersService', () => {
   });
 
   it('should invite a user successfully', async () => {
-    const input: IniviteUserinput = {
+    const input: InviteUserInput = {
       email: 'test@example.com',
       name: 'John',
       surname: 'Doe',

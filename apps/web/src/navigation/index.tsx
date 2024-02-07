@@ -12,6 +12,7 @@ import {
   ProjectsScreen,
   RegisterScreen,
   SettingsScreen,
+  SubmitSupportRequest,
   UsersScreen,
   ViewCompanyScreen,
 } from '@/web/containers';
@@ -56,6 +57,10 @@ export const routes = createRoutesFromElements(
           <Route index element={<Navigate to="/auth/dashboard" replace />} />
 
           <Route path="files-upload" element={<FileUpload />} />
+
+          {/* support -------- Only End User Access ------------ */}
+          <Route path="support" element={<SubmitSupportRequest />} />
+
           <Route path="*" element={<PageNotFoundScreen />} />
         </Route>
       </Route>

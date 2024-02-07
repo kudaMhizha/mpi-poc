@@ -7,15 +7,21 @@ type InvitedUser {
   successFullInvite: Boolean!
 }
 
+type UploadFileResponse {
+  url: String!
+  key: String!
+}
+
 type Query {
   sayHello: String!
 }
 
 type Mutation {
-  inviteUser(inviteUser: IniviteUserinput!): InvitedUser!
+  inviteUser(inviteUser: InviteUserInput!): InvitedUser!
+  uploadFile(userInput: UserInput!): UploadFileResponse!
 }
 
-input IniviteUserinput {
+input InviteUserInput {
   """User email address"""
   email: String!
 
@@ -36,4 +42,10 @@ input IniviteUserinput {
 
   """User job description"""
   jobDescription: String!
+}
+
+input UserInput {
+  fileName: String!
+  fileType: String!
+  buffer: String!
 }

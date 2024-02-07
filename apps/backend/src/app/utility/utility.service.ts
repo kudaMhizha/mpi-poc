@@ -4,9 +4,13 @@ import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class UtilityService {
-  async uploadFile(file, userInput: {fileName: string; fileType: string}) {
+  async uploadFile(userInput: {
+    fileName: string;
+    fileType: string;
+    buffer: string;
+  }) {
     const s3 = new S3Client({region: 'eu-west-1'});
-    const fileName = userInput?.fileName ?? file?.originalName;
+    const fileName = userInput?.fileName;
     const fileType = userInput?.fileType ?? 'Config';
 
     // TODO: Get current user company
@@ -17,7 +21,7 @@ export class UtilityService {
     const params = {
       Bucket: process.env.AWS_S3_FILE_STORAGE_BUCKET || '',
       Key: key,
-      Body: file?.buffer,
+      Body: userInput?.buffer,
     };
     const command = new PutObjectCommand(params);
     const response = await s3.send(command);

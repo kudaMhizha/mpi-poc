@@ -16,7 +16,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: `${env.VITE_API_URL}/graphql`,
 });
-
+console.log('client', {
+  client,
+  uri: env.VITE_API_URL
+})
 root.render(
   <StrictMode>
     <ApolloProvider client={client}>

@@ -10,6 +10,7 @@ import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {join} from 'path';
 import {UsersModule} from './users/users.module';
 import {CognitoModule} from './cognito/cognito.module';
+import {UtilityModule} from './utility/utility.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import {CognitoModule} from './cognito/cognito.module';
     PrismaModule,
     UsersModule,
     CognitoModule,
+    UtilityModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

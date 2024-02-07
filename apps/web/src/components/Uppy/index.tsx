@@ -3,7 +3,7 @@ import AwsS3 from '@uppy/aws-s3';
 import {Dashboard} from '@uppy/react';
 import {FormField, FormItem, FormLabel} from '@mpi-app/ui';
 import {Dispatch, FC, SetStateAction, useMemo} from 'react';
-import {env} from '../../constants/env';
+import {useUploadFileMutation} from 'generated-graphql';
 
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
@@ -14,6 +14,7 @@ interface IUppyInstance {
 }
 
 const UppyInstance: FC<IUppyInstance> = ({setFileUploaded}) => {
+  const [uploadFile] = useUploadFileMutation();
   const uppy = useMemo(() => {
     return new Uppy({
       id: 'mpi-uppy-instance',
@@ -26,9 +27,28 @@ const UppyInstance: FC<IUppyInstance> = ({setFileUploaded}) => {
   }, []);
 
   uppy.use(AwsS3, {
-    id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(), // secure random number generator
-    shouldUseMultipart: file => file.size > 100 * 2 ** 20,
-    companionUrl: env.VITE_API_URL,
+    id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(), // secure random number generator,
+    async getUploadParameters(file) {
+      const variables = {
+        userInput: {
+          fileName: file.name,
+          fileType: 'Config',
+          buffer: file.data.toString(),
+        },
+      };
+
+      try {
+        const {data} = await uploadFile({variables});
+        return {
+          method: 'PUT',
+          url: data?.uploadFile?.url || '',
+          fields: {},
+        };
+      } catch (error) {
+        console.error('Error fetching upload parameters:', error);
+        return await Promise.reject(error);
+      }
+    },
   });
 
   uppy.on('upload-success', (file, response) => {
