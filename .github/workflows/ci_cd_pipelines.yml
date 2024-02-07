@@ -25,11 +25,12 @@ jobs:
         run: yarn gql:codegen
 
       - name: 'Build App'
+        env:
+          VITE_APP_ENV: ${{ secrets.VITE_APP_ENV }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_APP_NAME: ${{ secrets.VITE_APP_NAME }}
+          VITE_HOST_URL: ${{ secrets.VITE_HOST_URL }}      
         run: |
-          VITE_APP_ENV=${{ secrets.VITE_APP_ENV }} \
-          VITE_API_URL=${{ secrets.VITE_API_URL }} \
-          VITE_APP_NAME=${{ secrets.VITE_APP_NAME }} \
-          VITE_HOST_URL=${{ secrets.VITE_HOST_URL }} \
           yarn build web --skip-nx-cache
           yarn infra:build
 
