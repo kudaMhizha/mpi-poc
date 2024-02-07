@@ -6,7 +6,7 @@ config:
   mpi:DB_NAME:
     secure: AAABAIQN28jD9E1gWoGQHoz+UOSx4rBA0XK5bUkOOJlyPudjPg==
   mpi:DB_PASSWORD:
-    secure: AAABAHpI9c6JDQu3jjAyKLcpNwQqE45Mb/wCEYTLF6Jd5Fc4MtUua3Ijhyi2yg==
+    secure: AAABALQrOmUuZGrLREy0l0pX/hn0BafsXGneRP7VI53re75tC49wJb+mIN4gDg==
   mpi:DB_USER_NAME:
     secure: AAABAMpu/zES12QzUPFaqVsSpOAetMBRygxOuiu4CHh3l4Y=
   mpi:REGION: eu-west-1
