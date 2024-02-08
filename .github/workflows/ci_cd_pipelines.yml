@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        
       - name: Check Disk Space
         run: |
           disk_space=$(df -h / | awk 'NR==2{print $5}')
@@ -23,12 +22,12 @@ jobs:
             exit 1
           fi
 
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # when set to "true" but frees about 6 GB
-          tool-cache: true
+      # - name: Free Disk Space (Ubuntu)
+      #   uses: jlumbroso/free-disk-space@main
+      #   with:
+      #     # this might remove tools that are actually needed,
+      #     # when set to "true" but frees about 6 GB
+      #     tool-cache: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
