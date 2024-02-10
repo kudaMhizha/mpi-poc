@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Echo Secret Variable
+        run: echo ${{ secrets.TEST_URL }}
       - name: Check Disk Space
         run: |
           disk_space=$(df -h / | awk 'NR==2{print $5}')
