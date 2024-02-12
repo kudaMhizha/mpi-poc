@@ -61,24 +61,34 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
             aws-region: eu-west-1
 
-      # - name: Pulumi deploy dev
-      #   if: startsWith(github.ref, 'refs/heads/develop')
-      #   uses: pulumi/actions@v3
-      #   with:
-      #     command: up
-      #     stack-name: mpi/ecs-dev
-      #     work-dir: apps/infra
-      #   env:
-      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: Pulumi refresh dev
+        if: startsWith(github.ref, 'refs/heads/develop')
+        uses: pulumi/actions@v3
+        with:
+          command: refresh
+          stack-name: mpi/ecs-dev
+          work-dir: apps/infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Authenticate with AWS ECR
-        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
+      - name: Pulumi deploy dev
+        if: startsWith(github.ref, 'refs/heads/develop')
+        uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: mpi/ecs-dev
+          work-dir: apps/infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Set DATABASE_URL environment variable
-        run: echo "DATABASE_URL=${{ secrets.TEST_URL }}" >> $GITHUB_ENV        
+      # - name: Authenticate with AWS ECR
+      #   run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 730335240006.dkr.ecr.eu-west-1.amazonaws.com
 
-      - name: Build Docker image
-        run: docker build -t test . --build-arg DATABASE_URL=${{ env.DATABASE_URL }}
+      # - name: Set DATABASE_URL environment variable
+      #   run: echo "DATABASE_URL=${{ secrets.TEST_URL }}" >> $GITHUB_ENV        
+
+      # - name: Build Docker image
+      #   run: docker build -t test . --build-arg DATABASE_URL=${{ env.DATABASE_URL }}
 
       # - name: Pull existing Docker image
       #   run: docker pull 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
