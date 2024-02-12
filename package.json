@@ -60,6 +60,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@phosphor-icons/react": "^2.0.15",
     "@prisma/client": "^5.8.1",
+    "@pulumi/github": "^5.26.0",
     "@pulumi/synced-folder": "^0.11.1",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
