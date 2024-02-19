@@ -33,6 +33,7 @@ export function createRepository(databaseUrl) {
   const registryUrl = repo.url.apply((url) => url.split('/')[0]);
   return {
     repoUrl: pulumi.interpolate`${registryUrl}`,
+    repoName: pulumi.interpolate`${repo.repository.name}`,
     imageUri,
     imageTag: pulumi.interpolate`${repo.repository.id}:latest`,
   };
