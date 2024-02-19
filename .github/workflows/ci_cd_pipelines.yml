@@ -71,12 +71,12 @@ jobs:
       #   env:
       #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Pulumi deploy dev
+      - name: Pulumi Set Outputs
         if: startsWith(github.ref, 'refs/heads/develop')
         id: pulumi
         uses: pulumi/actions@v3
         with:
-          command: up
+          command: refresh
           stack-name: mpi/ecs-dev
           work-dir: apps/infra
         env:
@@ -96,7 +96,15 @@ jobs:
       - name: Pull existing Docker image
         run: docker pull ${{ steps.pulumi.outputs.imageUri }}
         #730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
-
+      - name: Pulumi deploy dev
+        if: startsWith(github.ref, 'refs/heads/develop')
+        uses: pulumi/actions@v3
+        with:
+          command: refresh
+          stack-name: mpi/ecs-dev
+          work-dir: apps/infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       # - name: Delete existing Docker image
       #   run: docker rmi 730335240006.dkr.ecr.eu-west-1.amazonaws.com/poc:latest
       # TODO: https://www.pulumi.com/registry/packages/awsx/api-docs/ecr/repository/#lifecyclepolicy_nodejs
