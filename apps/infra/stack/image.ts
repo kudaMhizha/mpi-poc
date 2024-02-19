@@ -15,7 +15,7 @@ export function createRepository(databaseUrl) {
 
   const repo = new awsx.ecr.Repository(`${STACK_NAME}-repo`, {
     forceDelete: true,
-    tags: {Name: `${STACK_NAME}-ecr-repo`},
+    tags: { Name: `${STACK_NAME}-ecr-repo` },
   });
 
   /* Build and publish a Docker image to a private ECR registry */
@@ -29,6 +29,11 @@ export function createRepository(databaseUrl) {
   // });
 
   const imageUri = pulumi.interpolate`${repo.url}:latest`;
-
-  return {repoUrl: repo.url, imageUri};
+  //730335240006.dkr.ecr.eu-west-1.amazonaws.com/dev-repo-f23851a return 730335240006.dkr.ecr.eu-west-1
+  const registryUrl = repo.url.apply((url) => url.split('/')[0]);
+  return {
+    repoUrl: pulumi.interpolate`${registryUrl}`,
+    imageUri,
+    imageTag: pulumi.interpolate`${repo.repository.id}:latest`,
+  };
 }
