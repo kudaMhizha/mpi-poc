@@ -98,7 +98,7 @@ jobs:
       #   run: docker tag ${{steps.pulumi.outputs.imageTag}}
 
       - name: Push Docker image to AWS ECR
-        run: docker push ${{steps.pulumi.outputs.imageUri}}
+        run: docker push  ${{steps.pulumi.outputs.imageTag}}
       # - name: Pull existing Docker image
       #   run: docker pull ${{ steps.pulumi.outputs.imageUri }}
 
