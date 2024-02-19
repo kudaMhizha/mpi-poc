@@ -1,4 +1,5 @@
 import * as awsx from '@pulumi/awsx';
+import * as pulumi from '@pulumi/pulumi';
 import * as path from 'path';
 import * as config from './config';
 
@@ -18,14 +19,16 @@ export function createRepository(databaseUrl) {
   });
 
   /* Build and publish a Docker image to a private ECR registry */
-  const img = new awsx.ecr.Image(`${STACK_NAME}-ecr-image`, {
-    repositoryUrl: repo.url,
-    context: pathToWebsiteContents,
-    platform: PLATFORM,
-    args: {
-      DATABASE_URL: databaseUrl,
-    },
-  });
+  // const img = new awsx.ecr.Image(`${STACK_NAME}-ecr-image`, {
+  //   repositoryUrl: repo.url,
+  //   context: pathToWebsiteContents,
+  //   platform: PLATFORM,
+  //   args: {
+  //     DATABASE_URL: databaseUrl,
+  //   },
+  // });
 
-  return {repoUrl: repo.url, imageUri: img.imageUri};
+  const imageUri = pulumi.interpolate`${repo.url}:latest`;
+
+  return {repoUrl: repo.url, imageUri};
 }
