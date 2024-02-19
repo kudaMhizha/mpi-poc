@@ -10,7 +10,7 @@ import * as github from './stack/github';
 
 const fileRepository = bucket.createFileRepository();
 // const webApp = web.deployWeb();
-const userPool = auth.createUserPool();
+// const userPool = auth.createUserPool();
 const backend = container.createContainer({
   userPoolId: 'userPool.userPoolId',
   userPoolClientId: 'userPool.userPoolClientId',
@@ -18,9 +18,10 @@ const backend = container.createContainer({
 
 export const bucketName = fileRepository.bucketId;
 // export const cdnURL = webApp.cdnURL;
-export const userPoolId = userPool.userPoolId;
-export const userPoolArn = userPool.userPoolArn;
+// export const userPoolId = userPool.userPoolId;
+// export const userPoolArn = userPool.userPoolArn;
 export const databaseUrl = backend.databaseUrl;
 export const repositoryUrl = backend.repositoryUrl;
 export const imageUri = backend.imageUri;
 export const imageTag = backend.imageTag;
+export const repositoryName = backend.repositoryName;
