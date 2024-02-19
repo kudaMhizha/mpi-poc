@@ -38,3 +38,4 @@ export function createRepository(databaseUrl) {
     imageTag: pulumi.interpolate`${repo.repository.id}:latest`,
   };
 }
+
