@@ -14,8 +14,8 @@ const STACK_NAME = config.getConfig().stackName;
 console.info('AWS_ACCESS_KEY_ID', AWS_ACCESS_KEY_ID);
 
 export function createContainer(userPool: {
-  userPoolId: pulumi.Output<string>;
-  userPoolClientId: pulumi.Output<string>;
+  userPoolId: string;
+  userPoolClientId: string;
 }) {
   const LOG_DRIVER = 'awslogs';
   const CONTAINER_CPU = 512;

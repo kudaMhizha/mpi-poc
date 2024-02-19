@@ -12,8 +12,8 @@ const fileRepository = bucket.createFileRepository();
 // const webApp = web.deployWeb();
 const userPool = auth.createUserPool();
 const backend = container.createContainer({
-  userPoolId: userPool.userPoolId,
-  userPoolClientId: userPool.userPoolClientId,
+  userPoolId: 'userPool.userPoolId',
+  userPoolClientId: 'userPool.userPoolClientId',
 });
 
 export const bucketName = fileRepository.bucketId;
