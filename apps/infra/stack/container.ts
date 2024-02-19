@@ -113,5 +113,6 @@ export function createContainer(userPool: {
     databaseUrl: rds.dbConnectionString,
     imageUri: image.imageUri,
     repositoryUrl: image.repoUrl,
+    imageTag: image.imageTag
   };
 }

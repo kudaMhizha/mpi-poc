@@ -85,13 +85,14 @@ jobs:
       - run: echo "REPO_URL=${{ steps.pulumi.outputs.repositoryUrl }}"
       - run: echo "DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}"  
       - run: echo "IMAGE_URI=${{ steps.pulumi.outputs.imageUri }}" 
+      - run: echo "IMAGE_TAG=${{steps.pulumi.outputs.imageTag}}" 
 
       - name: Authenticate with AWS ECR
         run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ steps.pulumi.outputs.repositoryUrl }}
         #730335240006.dkr.ecr.eu-west-1.amazonaws.com
 
       - name: Build Docker image
-        run: docker build -t latest . --build-arg DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}
+        run: docker build -t ${{steps.pulumi.outputs.imageTag}} . --build-arg DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}
 
       # - name: Tag Docker image
       #   run: docker tag ${{steps.pulumi.outputs.imageTag}}

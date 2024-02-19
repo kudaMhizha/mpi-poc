@@ -23,3 +23,4 @@ export const userPoolArn = userPool.userPoolArn;
 export const databaseUrl = backend.databaseUrl;
 export const repositoryUrl = backend.repositoryUrl;
 export const imageUri = backend.imageUri;
+export const imageTag = backend.imageTag;
