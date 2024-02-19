@@ -39,18 +39,18 @@ jobs:
       - name: Install Dependencies
         run: yarn
       
-      - name: '🔗 Generate GraphQL'
-        run: yarn gql:codegen
+      # - name: '🔗 Generate GraphQL'
+      #   run: yarn gql:codegen
 
-      - name: 'Build App'
-        env:
-          VITE_APP_ENV: ${{ secrets.VITE_APP_ENV }}
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_APP_NAME: ${{ secrets.VITE_APP_NAME }}
-          VITE_HOST_URL: ${{ secrets.VITE_HOST_URL }}      
-        run: |
-          yarn build web --skip-nx-cache
-          yarn infra:build
+      # - name: 'Build App'
+      #   env:
+      #     VITE_APP_ENV: ${{ secrets.VITE_APP_ENV }}
+      #     VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      #     VITE_APP_NAME: ${{ secrets.VITE_APP_NAME }}
+      #     VITE_HOST_URL: ${{ secrets.VITE_HOST_URL }}      
+      #   run: |
+      #     yarn build web --skip-nx-cache
+      #     yarn infra:build
 
       - name: Check AWS CLI version
         run: aws --version
@@ -61,15 +61,15 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS }}
             aws-region: eu-west-1
 
-      - name: Pulumi refresh dev
-        if: startsWith(github.ref, 'refs/heads/develop')
-        uses: pulumi/actions@v3
-        with:
-          command: refresh
-          stack-name: mpi/ecs-dev
-          work-dir: apps/infra
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      # - name: Pulumi refresh dev
+      #   if: startsWith(github.ref, 'refs/heads/develop')
+      #   uses: pulumi/actions@v3
+      #   with:
+      #     command: refresh
+      #     stack-name: mpi/ecs-dev
+      #     work-dir: apps/infra
+      #   env:
+      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Pulumi deploy dev
         if: startsWith(github.ref, 'refs/heads/develop')
