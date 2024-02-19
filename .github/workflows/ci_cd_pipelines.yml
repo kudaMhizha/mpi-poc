@@ -73,6 +73,7 @@ jobs:
 
       - name: Pulumi deploy dev
         if: startsWith(github.ref, 'refs/heads/develop')
+        id: pulumi
         uses: pulumi/actions@v3
         with:
           command: up
