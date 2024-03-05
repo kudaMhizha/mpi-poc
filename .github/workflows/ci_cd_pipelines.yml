@@ -71,27 +71,27 @@ jobs:
           work-dir: apps/infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      - run: echo "BUCKET_ID=${{ steps.pulumi.outputs.bucketName }}"
-      - run: echo "REPO_URL=${{ steps.pulumi.outputs.repositoryUrl }}"
-      - run: echo "DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}"  
-      - run: echo "IMAGE_URI=${{ steps.pulumi.outputs.imageUri }}" 
-      - run: echo "IMAGE_TAG=${{steps.pulumi.outputs.imageTag}}" 
-      - run: echo "REPO_NAME=${{steps.pulumi.outputs.repositoryName}}" 
+      # - run: echo "BUCKET_ID=${{ steps.pulumi.outputs.bucketName }}"
+      # - run: echo "REPO_URL=${{ steps.pulumi.outputs.repositoryUrl }}"
+      # - run: echo "DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}"  
+      # - run: echo "IMAGE_URI=${{ steps.pulumi.outputs.imageUri }}" 
+      # - run: echo "IMAGE_TAG=${{steps.pulumi.outputs.imageTag}}" 
+      # - run: echo "REPO_NAME=${{steps.pulumi.outputs.repositoryName}}" 
 
-      - name: Authenticate with AWS ECR
-        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ steps.pulumi.outputs.repositoryUrl }}
-        #730335240006.dkr.ecr.eu-west-1.amazonaws.com
+      # - name: Authenticate with AWS ECR
+      #   run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ steps.pulumi.outputs.repositoryUrl }}
+      #   #730335240006.dkr.ecr.eu-west-1.amazonaws.com
 
-      - name: Build Docker image
-        run: docker build -t ${{steps.pulumi.outputs.repositoryName}} . --build-arg DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}
+      # - name: Build Docker image
+      #   run: docker build -t ${{steps.pulumi.outputs.repositoryName}} . --build-arg DATABASE_URL=${{ steps.pulumi.outputs.databaseUrl }}
 
-      - name: Tag Docker image
-        run: docker tag ${{steps.pulumi.outputs.imageTag}} ${{ steps.pulumi.outputs.imageUri }}
+      # - name: Tag Docker image
+      #   run: docker tag ${{steps.pulumi.outputs.imageTag}} ${{ steps.pulumi.outputs.imageUri }}
 
-      - name: Push Docker image to AWS ECR
-        run: docker push  ${{ steps.pulumi.outputs.imageUri }}
-      # - name: Pull existing Docker image
-      #   run: docker pull ${{ steps.pulumi.outputs.imageUri }}
+      # - name: Push Docker image to AWS ECR
+      #   run: docker push  ${{ steps.pulumi.outputs.imageUri }}
+      # # - name: Pull existing Docker image
+      # #   run: docker pull ${{ steps.pulumi.outputs.imageUri }}
 
       - name: Pulumi deploy dev
         if: startsWith(github.ref, 'refs/heads/develop')
