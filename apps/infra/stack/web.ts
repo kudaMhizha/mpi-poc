@@ -5,6 +5,9 @@ import * as path from 'path';
 import * as config from './config';
 import {updateDefaultS3Config} from '../utils';
 import {createLogBucket} from './bucket';
+import { createDomainRecord } from './dns';
+import { provisionCertificate } from './acm';
+import { createARecord } from './route53';
 
 const STACK_NAME = pulumi.getStack();
 const callerIdentity = pulumi.output(aws.getCallerIdentity({}));
@@ -55,12 +58,23 @@ export function deployWeb() {
   const logBucketName = 'web-logBucket';
   const logBucket = createLogBucket(logBucketName);
 
+  const config = {
+    targetDomain: `dev.mpi-holdings.com`,
+    includeWWW: true,
+  }
+
+  const distributionAliases = config.includeWWW
+    ? [config.targetDomain, `www.${config.targetDomain}`] : [config.targetDomain];
+  
+  const { certificateArn } = provisionCertificate()
+
   const cdn = new aws.cloudfront.Distribution(
     `${STACK_NAME}-site-cdn`,
     {
       enabled: true,
       defaultRootObject: indexDocument,
-      comment: `This a distribution for the ${STACK_NAME} environment for www.mpi.${STACK_NAME}.co.za`,
+      aliases: distributionAliases,
+      comment: `This a distribution for the ${STACK_NAME} environment for www.${config.targetDomain}`,
       origins: [
         {
           originId: bucket.arn,
@@ -94,9 +108,13 @@ export function deployWeb() {
           responseCode: 200,
         },
       ],
+      // viewerCertificate: {
+      //   cloudfrontDefaultCertificate: true,
+      // },
       viewerCertificate: {
-        cloudfrontDefaultCertificate: true,
-      },
+        acmCertificateArn: certificateArn,  // Per AWS, ACM certificate must be in the us-east-1 region.
+        sslSupportMethod: "sni-only",
+    },
       loggingConfig: {
         bucket: logBucket.bucketRegionalDomainName,
         includeCookies: false,
@@ -105,6 +123,8 @@ export function deployWeb() {
     },
     {dependsOn: syncedFolder}
   );
+
+  // const dns = createDomainRecord(cdn.id)
 
   /* 
     WHY: A bit weird, but this seems to be the easiest way to get Output<T> => T. 
@@ -146,6 +166,8 @@ export function deployWeb() {
     },
     {dependsOn: cdn}
   );
+
+  createARecord(cdn)
 
   return {
     cdnHostname: cdn.domainName,
