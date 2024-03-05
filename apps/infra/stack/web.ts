@@ -5,7 +5,6 @@ import * as path from 'path';
 import * as config from './config';
 import {updateDefaultS3Config} from '../utils';
 import {createLogBucket} from './bucket';
-import { createDomainRecord } from './dns';
 import { provisionCertificate } from './acm';
 import { createARecord } from './route53';
 
